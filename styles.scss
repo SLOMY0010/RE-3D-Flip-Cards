@@ -1,0 +1,205 @@
+$card-width: 300px;
+$card-height: 400px;
+$border-radius: 15px;
+$primary-color: #047f04;
+$button-color: #2940b9;
+$transition-speed: 0.9s;
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.65),
+        rgba(0, 0, 0, 0.6)
+    ),
+    url("https://c4.wallpaperflare.com/wallpaper/935/715/662/resident-evil-4-remake-4k-capcom-resident-evil-resident-evil-4-hd-wallpaper-preview.jpg");
+    background-size: cover;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+// ============================================
+// LAYOUT
+// ============================================
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.more {
+    display: none;
+}
+
+// ============================================
+// CARD
+// ============================================
+.card {
+    width: $card-width;
+    height: $card-height;
+    perspective: 1500px;
+    margin: 40px;
+}
+
+// ============================================
+// CONTENT (ROTATING OBJECT)
+// ============================================
+.content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    transform-style: preserve-3d;
+    transition: transform $transition-speed cubic-bezier(0.75, 0, 0.85, 1);
+}
+
+// Flip trigger
+.more:checked ~ .content {
+    transform: rotateY(180deg);
+}
+
+// ============================================
+// FRONT & BACK
+// ============================================
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    border-radius: $border-radius;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+// ============================================
+// FRONT
+// ============================================
+.front {
+    background-size: cover;
+    background-position: center;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: $border-radius;
+
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.1)
+        );
+    }
+
+    .inner {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+
+        padding: 20px;
+
+        transform: translateZ(80px) scale(0.9);
+
+        h2 {
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .rating {
+            margin-bottom: 15px;
+
+            i {
+                color: #f0a500;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+// ============================================
+// BACK
+// ============================================
+.back {
+    background: #04041f;
+    transform: rotateY(-180deg);
+
+    .inner {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        padding: 20px;
+        gap: 12px;
+
+        transform: translateZ(80px) scale(0.9);
+    }
+
+    .info span {
+        font-size: 28px;
+        font-weight: bold;
+        color: #666;
+    }
+
+    .description {
+        font-size: 16px;
+        color: #666;
+        text-align: center;
+    }
+
+    .genre {
+        font-size: 14px;
+        color: #999;
+    }
+
+    .price {
+        font-size: 24px;
+        font-weight: bold;
+        color: $primary-color;
+    }
+}
+
+// ============================================
+// BUTTON
+// ============================================
+.button {
+    margin-top: 15px;
+    padding: 8px 20px;
+
+    background: $button-color;
+    color: white;
+    border-radius: 20px;
+
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: 0.2s;
+
+    &:hover {
+        background: darken($button-color, 50%);
+    }
+
+    &.return {
+        background: $primary-color;
+
+        &:hover {
+            background: darken($primary-color, 50%);
+        }
+    }
+}
